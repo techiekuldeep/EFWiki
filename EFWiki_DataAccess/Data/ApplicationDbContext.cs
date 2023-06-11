@@ -6,7 +6,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using EFWiki_DataAccess.FluentConfig;
-
+using Microsoft.Extensions.Logging;
 namespace EFWiki_DataAccess.Data
 {
     public class ApplicationDbContext : DbContext
@@ -26,7 +26,12 @@ namespace EFWiki_DataAccess.Data
         public DbSet<Fluent_BookAuthorMap> Fluent_BookAuthorMaps { get; set; }
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
-            optionsBuilder.UseSqlServer("Server = (localdb)\\MSSQLLocalDB;Database = EFWiki; TrustServerCertificate=True; Trusted_Connection=True;");
+            //No Logging
+            //optionsBuilder.UseSqlServer("Server = (localdb)\\MSSQLLocalDB;Database = EFWiki; TrustServerCertificate=True; Trusted_Connection=True;");
+
+            //Logging
+            optionsBuilder.UseSqlServer("Server = (localdb)\\MSSQLLocalDB;Database = EFWiki; TrustServerCertificate=True; Trusted_Connection=True;")
+                .LogTo(Console.WriteLine, new[] {DbLoggerCategory.Database.Command.Name }, LogLevel.Information);
         }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
