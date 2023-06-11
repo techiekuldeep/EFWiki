@@ -20,7 +20,7 @@ Console.WriteLine("Hello, World!");
 //GetAllBooks();
 //GetBook();
 //UpdateBook();
-DeleteBook();
+//DeleteBook();
 
 //void DeleteBook()
 //{
@@ -29,13 +29,13 @@ DeleteBook();
 //    context.Books.Remove(book);
 //    context.SaveChanges();
 //}
-async void DeleteBook()
-{
-    using var context = new ApplicationDbContext();
-    var book = await context.Books.FindAsync(7);
-    context.Books.Remove(book);
-    await context.SaveChangesAsync();
-}
+//async void DeleteBook()
+//{
+//    using var context = new ApplicationDbContext();
+//    var book = await context.Books.FindAsync(7);
+//    context.Books.Remove(book);
+//    await context.SaveChangesAsync();
+//}
 
 //void UpdateBook()
 //{
@@ -56,24 +56,24 @@ async void DeleteBook()
 //    }
 //}
 
-async void UpdateBook()
-{
-    try
-    {
-        using var context = new ApplicationDbContext();
-        var books = await context.Books.Where(u => u.Publisher_Id == 1).ToListAsync();
-        foreach (var book in books)
-        {
-            book.Price = 28.50m;
-        }
-        //Console.WriteLine(book.Title + " - " + book.ISBN);
-        await context.SaveChangesAsync();
-    }
-    catch (Exception e)
-    {
+//async void UpdateBook()
+//{
+//    try
+//    {
+//        using var context = new ApplicationDbContext();
+//        var books = await context.Books.Where(u => u.Publisher_Id == 1).ToListAsync();
+//        foreach (var book in books)
+//        {
+//            book.Price = 28.50m;
+//        }
+//        //Console.WriteLine(book.Title + " - " + book.ISBN);
+//        await context.SaveChangesAsync();
+//    }
+//    catch (Exception e)
+//    {
 
-    }
-}
+//    }
+//}
 
 //void GetBook()
 //{
@@ -99,39 +99,39 @@ async void UpdateBook()
 //    }
 //}
 
-async void GetBook()
-{
-    try
-    {
-        using var context = new ApplicationDbContext();
-        var books = await context.Books.Skip(0).Take(2).ToListAsync();
-        //Console.WriteLine(book.Title + " - " + book.ISBN);
-        foreach (var book in books)
-        {
-            Console.WriteLine(book.Title + " - " + book.ISBN);
-        }
-        books = await context.Books.Skip(4).Take(1).ToListAsync();
-        //Console.WriteLine(book.Title + " - " + book.ISBN);
-        foreach (var book in books)
-        {
-            Console.WriteLine(book.Title + " - " + book.ISBN);
-        }
-    }
-    catch (Exception e)
-    {
+//async void GetBook()
+//{
+//    try
+//    {
+//        using var context = new ApplicationDbContext();
+//        var books = await context.Books.Skip(0).Take(2).ToListAsync();
+//        //Console.WriteLine(book.Title + " - " + book.ISBN);
+//        foreach (var book in books)
+//        {
+//            Console.WriteLine(book.Title + " - " + book.ISBN);
+//        }
+//        books = await context.Books.Skip(4).Take(1).ToListAsync();
+//        //Console.WriteLine(book.Title + " - " + book.ISBN);
+//        foreach (var book in books)
+//        {
+//            Console.WriteLine(book.Title + " - " + book.ISBN);
+//        }
+//    }
+//    catch (Exception e)
+//    {
 
-    }
-}
+//    }
+//}
 
-void GetAllBooks()
-{
-    using var context = new ApplicationDbContext();
-    var books = context.Books.ToList();
-    foreach (var book in books)
-    {
-        Console.WriteLine(book.Title + " - " + book.ISBN );
-    }
-}
+//void GetAllBooks()
+//{
+//    using var context = new ApplicationDbContext();
+//    var books = context.Books.ToList();
+//    foreach (var book in books)
+//    {
+//        Console.WriteLine(book.Title + " - " + book.ISBN );
+//    }
+//}
 
 
 //void AddBook()
@@ -141,10 +141,10 @@ void GetAllBooks()
 //    context.SaveChanges();
 //}
 
-async void AddBook()
-{
-    Book book = new() { Title = "Connect the Dots", ISBN = "999-81-90421-2-1", Price = 35.5m, Publisher_Id = 3 };
-    using var context = new ApplicationDbContext();
-    var books = await context.Books.AddAsync(book);
-    await context.SaveChangesAsync();
-}
+//async void AddBook()
+//{
+//    Book book = new() { Title = "Connect the Dots", ISBN = "999-81-90421-2-1", Price = 35.5m, Publisher_Id = 3 };
+//    using var context = new ApplicationDbContext();
+//    var books = await context.Books.AddAsync(book);
+//    await context.SaveChangesAsync();
+//}
