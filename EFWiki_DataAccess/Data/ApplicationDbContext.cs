@@ -24,14 +24,19 @@ namespace EFWiki_DataAccess.Data
         public DbSet<Fluent_Author> Fluent_Authors { get; set; }
         public DbSet<Fluent_Publisher> Fluent_Publishers { get; set; }
         public DbSet<Fluent_BookAuthorMap> Fluent_BookAuthorMaps { get; set; }
+
+        public ApplicationDbContext(DbContextOptions<ApplicationDbContext> options) : base(options)
+        {
+                
+        }
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
             //No Logging
             //optionsBuilder.UseSqlServer("Server = (localdb)\\MSSQLLocalDB;Database = EFWiki; TrustServerCertificate=True; Trusted_Connection=True;");
 
             //Logging
-            optionsBuilder.UseSqlServer("Server = (localdb)\\MSSQLLocalDB;Database = EFWiki; TrustServerCertificate=True; Trusted_Connection=True;")
-                .LogTo(Console.WriteLine, new[] {DbLoggerCategory.Database.Command.Name }, LogLevel.Information);
+            //optionsBuilder.UseSqlServer("Server = (localdb)\\MSSQLLocalDB;Database = EFWiki; TrustServerCertificate=True; Trusted_Connection=True;")
+            //    .LogTo(Console.WriteLine, new[] {DbLoggerCategory.Database.Command.Name }, LogLevel.Information);
         }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
