@@ -1,4 +1,4 @@
-﻿using EFWiki_Web.Models;
+﻿using EFWiki_Model.Models;
 
 using Microsoft.AspNetCore.Mvc;
 

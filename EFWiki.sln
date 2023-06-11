@@ -5,6 +5,12 @@ VisualStudioVersion = 17.5.33627.172
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "EFWiki_Web", "EFWiki_Web\EFWiki_Web.csproj", "{F6C31CDA-6DE8-46D3-87DF-28C74DDD1571}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "EFWiki_DataAccess", "EFWiki_DataAccess\EFWiki_DataAccess.csproj", "{C98D49E4-9B2D-4148-9760-8F4B04363E8A}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "EFWiki_Model", "EFWiki_Model\EFWiki_Model.csproj", "{35058D02-9856-413F-A35A-CE2C8FD48175}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "EFWiki_Console", "EfWiki_Console\EFWiki_Console.csproj", "{9D9B132F-F23C-48B7-80FD-70B0B5295E85}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -15,6 +21,18 @@ Global
 		{F6C31CDA-6DE8-46D3-87DF-28C74DDD1571}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{F6C31CDA-6DE8-46D3-87DF-28C74DDD1571}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{F6C31CDA-6DE8-46D3-87DF-28C74DDD1571}.Release|Any CPU.Build.0 = Release|Any CPU
+		{C98D49E4-9B2D-4148-9760-8F4B04363E8A}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{C98D49E4-9B2D-4148-9760-8F4B04363E8A}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{C98D49E4-9B2D-4148-9760-8F4B04363E8A}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{C98D49E4-9B2D-4148-9760-8F4B04363E8A}.Release|Any CPU.Build.0 = Release|Any CPU
+		{35058D02-9856-413F-A35A-CE2C8FD48175}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{35058D02-9856-413F-A35A-CE2C8FD48175}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{35058D02-9856-413F-A35A-CE2C8FD48175}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{35058D02-9856-413F-A35A-CE2C8FD48175}.Release|Any CPU.Build.0 = Release|Any CPU
+		{9D9B132F-F23C-48B7-80FD-70B0B5295E85}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{9D9B132F-F23C-48B7-80FD-70B0B5295E85}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{9D9B132F-F23C-48B7-80FD-70B0B5295E85}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{9D9B132F-F23C-48B7-80FD-70B0B5295E85}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
