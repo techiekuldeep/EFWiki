@@ -45,36 +45,33 @@ namespace EFWiki_Web.Controllers
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Upsert(Category obj)
+        public async Task<IActionResult> Upsert(BookVM obj)
         {
-            if (ModelState.IsValid)
-            {
-                if (obj.CategoryId == 0)
+            
+                if (obj.Book.BookId == 0)
                 {
                     //Create
-                    await _db.Categories.AddAsync(obj);
+                    await _db.Books.AddAsync(obj.Book);
                 }
                 else 
                 {
-                    //Update
-                    _db.Categories.Update(obj);
+                //Update
+                _db.Books.Update(obj.Book);
                 }
                 await _db.SaveChangesAsync();
                 return RedirectToAction(nameof(Index));
-            }
-            return View(obj);
         }
 
         public async Task<IActionResult> Delete(int? id)
         {
-            Category obj = new();
-            obj = _db.Categories.FirstOrDefault(u => u.CategoryId == id);
+            Book obj = new();
+            obj = _db.Books.FirstOrDefault(u => u.BookId == id);
             if (obj == null)
             {
                 return NotFound();
             }
 
-            _db.Categories.Remove(obj);
+            _db.Books.Remove(obj);
             await _db.SaveChangesAsync();
             return RedirectToAction(nameof(Index));
         }
