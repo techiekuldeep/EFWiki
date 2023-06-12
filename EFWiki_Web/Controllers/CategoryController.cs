@@ -35,5 +35,26 @@ namespace EFWiki_Web.Controllers
             return View(obj);
 
         }
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public async Task<IActionResult> Upsert(Category obj)
+        {
+            if (ModelState.IsValid)
+            {
+                if (obj.CategoryId == 0)
+                {
+                    //Create
+                    await _db.Categories.AddAsync(obj);
+                }
+                else 
+                {
+                    //Update
+                    _db.Categories.Update(obj);
+                }
+                await _db.SaveChangesAsync();
+                return RedirectToAction(nameof(Index));
+            }
+            return View(obj);
+        }
     }
 }
