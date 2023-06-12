@@ -33,8 +33,8 @@ namespace EFWiki_Web.Controllers
                 return NotFound();
             }
             return View(obj);
-
         }
+
         [HttpPost]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Upsert(Category obj)
@@ -55,6 +55,20 @@ namespace EFWiki_Web.Controllers
                 return RedirectToAction(nameof(Index));
             }
             return View(obj);
+        }
+
+        public async Task<IActionResult> Delete(int? id)
+        {
+            Category obj = new();
+            obj = _db.Categories.First(u => u.CategoryId == id);
+            if (obj == null)
+            {
+                return NotFound();
+            }
+
+            _db.Categories.Remove(obj);
+            await _db.SaveChangesAsync();
+            return RedirectToAction(nameof(Index));
         }
     }
 }
