@@ -2,6 +2,8 @@
 using EFWiki_DataAccess.Data;
 using EFWiki_Model.Models;
 using System.Collections.Generic;
+using EFWiki_Model.ViewModels;
+using Microsoft.AspNetCore.Mvc.Rendering;
 
 namespace EFWiki_Web.Controllers
 {
@@ -20,14 +22,20 @@ namespace EFWiki_Web.Controllers
 
         public IActionResult Upsert(int? id)
         {
-            Category obj= new();
+            BookVM obj= new();
+            obj.PublishersList = _db.Publishers.Select(i => new SelectListItem
+            {
+                Text = i.Name,
+                Value = i.Publisher_Id.ToString()
+            });
+
             if (id == null || id==0)
             {
                 //Create
                 return View(obj);
             }
             //edit
-            obj = _db.Categories.FirstOrDefault(u=>u.CategoryId==id);
+            obj.Book = _db.Books.FirstOrDefault(u=>u.BookId==id);
             if (obj == null)
             {
                 return NotFound();
