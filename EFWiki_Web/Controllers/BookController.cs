@@ -16,7 +16,14 @@ namespace EFWiki_Web.Controllers
         }
         public IActionResult Index()
         {
-            List<Book> objList = _db.Books.ToList(); 
+            List<Book> objList = _db.Books.ToList();
+            foreach (var obj in objList)
+            {
+                //Without Explicit Loading - Each call creates database round trip - least efficient
+                //obj.Publisher = _db.Publishers.Find(obj.Publisher_Id);
+                //With Explicit Loading - more efficient
+                _db.Entry(obj).Reference(u => u.Publisher).Load();
+            }
             return View(objList);
         }
 
