@@ -31,20 +31,21 @@ namespace EFWiki_Web.Controllers
         //Eager Loading to avoid n+1 exceution
         public IActionResult Index()
         {
-            //List<Book> objList = _db.Books.Include(u=>u.Publisher).ToList();
-            List<Book> objList = _db.Books.ToList();
-            foreach (var obj in objList)
-                {
-                //Without Explicit Loading - Each call creates database round trip - least efficient
-                //obj.Publisher = _db.Publishers.Find(obj.Publisher_Id);
-                //With Explicit Loading - more efficient
-                _db.Entry(obj).Reference(u => u.Publisher).Load();
-                _db.Entry(obj).Collection(u => u.BookAuthorMap).Load();
-                foreach (var bookAuth in obj.BookAuthorMap)
-                {
-                    _db.Entry(bookAuth).Reference(u => u.Author).Load();
-                }
-            }
+            List<Book> objList = _db.Books.Include(u => u.Publisher)
+                .Include(u => u.BookAuthorMap).ThenInclude(u => u.Author).ToList();
+            //List<Book> objList = _db.Books.ToList();
+            //foreach (var obj in objList)
+            //    {
+            //Without Explicit Loading - Each call creates database round trip - least efficient
+            //obj.Publisher = _db.Publishers.Find(obj.Publisher_Id);
+            //With Explicit Loading - more efficient
+            //    _db.Entry(obj).Reference(u => u.Publisher).Load();
+            //    _db.Entry(obj).Collection(u => u.BookAuthorMap).Load();
+            //    foreach (var bookAuth in obj.BookAuthorMap)
+            //    {
+            //        _db.Entry(bookAuth).Reference(u => u.Author).Load();
+            //    }
+            //}
             return View(objList);
         }
 
