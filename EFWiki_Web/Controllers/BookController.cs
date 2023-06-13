@@ -4,6 +4,7 @@ using EFWiki_Model.Models;
 using System.Collections.Generic;
 using EFWiki_Model.ViewModels;
 using Microsoft.AspNetCore.Mvc.Rendering;
+using Microsoft.EntityFrameworkCore;
 
 namespace EFWiki_Web.Controllers
 {
@@ -14,16 +15,30 @@ namespace EFWiki_Web.Controllers
         {
             _db = db;
         }
+        //public IActionResult Index()
+        //{
+        //    List<Book> objList = _db.Books.ToList();
+        //    foreach (var obj in objList)
+        //    {
+        //        //Without Explicit Loading - Each call creates database round trip - least efficient
+        //        //obj.Publisher = _db.Publishers.Find(obj.Publisher_Id);
+        //        //With Explicit Loading - more efficient
+        //        _db.Entry(obj).Reference(u => u.Publisher).Load();
+        //    }
+        //    return View(objList);
+        //}
+
+        //Eager Loading to avoid n+1 exceution
         public IActionResult Index()
         {
-            List<Book> objList = _db.Books.ToList();
-            foreach (var obj in objList)
-            {
+            List<Book> objList = _db.Books.Include(u=>u.Publisher).ToList();
+            //foreach (var obj in objList)
+            //{
                 //Without Explicit Loading - Each call creates database round trip - least efficient
                 //obj.Publisher = _db.Publishers.Find(obj.Publisher_Id);
                 //With Explicit Loading - more efficient
-                _db.Entry(obj).Reference(u => u.Publisher).Load();
-            }
+            //    _db.Entry(obj).Reference(u => u.Publisher).Load();
+            //}
             return View(objList);
         }
 
@@ -96,9 +111,11 @@ namespace EFWiki_Web.Controllers
             }
             BookDetail obj = new();
             //edit
-            obj.Book = _db.Books.FirstOrDefault(u => u.BookId == id);
+            //obj.Book = _db.Books.FirstOrDefault(u => u.BookId == id);
             //another optimal way to update Book Detail without BookVM
-            obj = _db.BookDetails.FirstOrDefault(u => u.Book_Id == id);
+            //obj = _db.BookDetails.FirstOrDefault(u => u.Book_Id == id);
+            //Eager Loading
+            obj = _db.BookDetails.Include(u => u.Book).FirstOrDefault(u => u.Book_Id == id);
             if (obj == null)
             {
                 return NotFound();
