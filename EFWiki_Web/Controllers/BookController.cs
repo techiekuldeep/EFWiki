@@ -154,29 +154,91 @@ namespace EFWiki_Web.Controllers
             await _db.SaveChangesAsync();
             return RedirectToAction(nameof(Index));
         }
+
+        public IActionResult ManageAuthors(int id)
+        {
+            BookAuthorVM obj = new()
+            {
+                BookAuthorList = _db.BookAuthorMaps.Include(u => u.Author).Include(u => u.Book)
+                    .Where(u => u.Book_Id == id).ToList(),
+                BookAuthor = new()
+                {
+                    Book_Id = id
+                },
+                Book = _db.Books.FirstOrDefault(u => u.BookId == id)
+            };
+
+            List<int> tempListOfAssignedAuthor = obj.BookAuthorList.Select(u => u.Author_Id).ToList();
+
+            //NOT IN clause
+            //get all the authors whos id is not in tempListOfAssignedAuthors
+
+            var tempList = _db.Authors.Where(u => !tempListOfAssignedAuthor.Contains(u.Author_Id)).ToList();
+            obj.AuthorList = tempList.Select(i => new SelectListItem
+            {
+                Text = i.FullName,
+                Value = i.Author_Id.ToString()
+            });
+
+            return View(obj);
+        }
+
+
+        [HttpPost]
+        public IActionResult ManageAuthors(BookAuthorVM bookAuthorVM)
+        {
+            if (bookAuthorVM.BookAuthor.Book_Id != 0 && bookAuthorVM.BookAuthor.Author_Id != 0)
+            {
+                _db.BookAuthorMaps.Add(bookAuthorVM.BookAuthor);
+                _db.SaveChanges();
+            }
+            return RedirectToAction(nameof(ManageAuthors), new { @id = bookAuthorVM.BookAuthor.Book_Id });
+        }
+
+        [HttpPost]
+        public IActionResult RemoveAuthors(int authorId, BookAuthorVM bookAuthorVM)
+        {
+            int bookId = bookAuthorVM.Book.BookId;
+            BookAuthorMap bookAuthorMap = _db.BookAuthorMaps.FirstOrDefault(
+                u => u.Author_Id == authorId && u.Book_Id == bookId);
+
+
+            _db.BookAuthorMaps.Remove(bookAuthorMap);
+            _db.SaveChanges();
+            return RedirectToAction(nameof(ManageAuthors), new { @id = bookId });
+        }
         public async Task<IActionResult> Playground()
         {
-            var bookTemp = _db.Books.FirstOrDefault();
-            bookTemp.Price = 100;
+            //Deferred Execution
+            //var bookTemp = _db.Books.FirstOrDefault();
+            //bookTemp.Price = 100;
 
-            var bookCollection = _db.Books;
-            decimal totalPrice = 0;
+            //var bookCollection = _db.Books;
+            //decimal totalPrice = 0;
 
-            foreach (var book in bookCollection)
-            {
-                totalPrice += book.Price;
-            }
+            //foreach (var book in bookCollection)
+            //{
+            //    totalPrice += book.Price;
+            //}
 
-            var bookList = _db.Books.ToList();
-            foreach (var book in bookList)
-            {
-                totalPrice += book.Price;
-            }
+            //var bookList = _db.Books.ToList();
+            //foreach (var book in bookList)
+            //{
+            //    totalPrice += book.Price;
+            //}
 
-            var bookCollection2 = _db.Books;
-            var bookCount1 = bookCollection2.Count();
+            //var bookCollection2 = _db.Books;
+            //var bookCount1 = bookCollection2.Count();
 
-            var bookCount2 = _db.Books.Count();
+            //var bookCount2 = _db.Books.Count();
+            
+
+            //IEnumerable vs IQueryable
+            IEnumerable<Book> BookList1 = _db.Books;
+            var FilteredBook1 = BookList1.Where(b => b.Price > 20).ToList();
+
+            IQueryable<Book> BookList2 = _db.Books;
+            var fileredBook2 = BookList2.Where(b => b.Price > 20).ToList();
             return RedirectToAction(nameof(Index));
         }
 
