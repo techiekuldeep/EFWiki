@@ -69,16 +69,36 @@ namespace EFWiki_Web.Controllers
                 return RedirectToAction(nameof(Index));
         }
 
+        //public IActionResult Details(int? id)
+        //{
+        //    BookVM obj = new();
+           
+        //    if (id == null || id == 0)
+        //    {
+        //        return NotFound();
+        //    }
+        //    //edit
+        //    obj.Book = _db.Books.FirstOrDefault(u => u.BookId == id);
+        //    //one way to update Book Detail using BookVM
+        //    obj.Book.BookDetail = _db.BookDetails.FirstOrDefault(u => u.Book_Id == id);
+        //    if (obj == null)
+        //    {
+        //        return NotFound();
+        //    }
+        //    return View(obj);
+        //}
+
         public IActionResult Details(int? id)
         {
-            BookVM obj = new();
-           
             if (id == null || id == 0)
             {
                 return NotFound();
             }
+            BookDetail obj = new();
             //edit
             obj.Book = _db.Books.FirstOrDefault(u => u.BookId == id);
+            //another optimal way to update Book Detail without BookVM
+            obj = _db.BookDetails.FirstOrDefault(u => u.Book_Id == id);
             if (obj == null)
             {
                 return NotFound();
@@ -88,18 +108,17 @@ namespace EFWiki_Web.Controllers
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Details(BookVM obj)
+        public async Task<IActionResult> Details(BookDetail obj)
         {
-
-            if (obj.Book.BookId == 0)
+            if (obj.BookDetail_Id== 0)
             {
                 //Create
-                await _db.Books.AddAsync(obj.Book);
+                await _db.BookDetails.AddAsync(obj);
             }
             else
             {
                 //Update
-                _db.Books.Update(obj.Book);
+                _db.BookDetails.Update(obj);
             }
             await _db.SaveChangesAsync();
             return RedirectToAction(nameof(Index));
