@@ -69,6 +69,42 @@ namespace EFWiki_Web.Controllers
                 return RedirectToAction(nameof(Index));
         }
 
+        public IActionResult Details(int? id)
+        {
+            BookVM obj = new();
+           
+            if (id == null || id == 0)
+            {
+                return NotFound();
+            }
+            //edit
+            obj.Book = _db.Books.FirstOrDefault(u => u.BookId == id);
+            if (obj == null)
+            {
+                return NotFound();
+            }
+            return View(obj);
+        }
+
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public async Task<IActionResult> Details(BookVM obj)
+        {
+
+            if (obj.Book.BookId == 0)
+            {
+                //Create
+                await _db.Books.AddAsync(obj.Book);
+            }
+            else
+            {
+                //Update
+                _db.Books.Update(obj.Book);
+            }
+            await _db.SaveChangesAsync();
+            return RedirectToAction(nameof(Index));
+        }
+
         public async Task<IActionResult> Delete(int? id)
         {
             Book obj = new();
