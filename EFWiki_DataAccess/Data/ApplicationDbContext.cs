@@ -12,6 +12,7 @@ namespace EFWiki_DataAccess.Data
     public class ApplicationDbContext : DbContext
     {
         public DbSet<Book> Books { get; set; }
+        public DbSet<MainBookDetails> MainBookDetails { get; set; }
         public DbSet<Category> Categories { get; set; }
         public DbSet<Author> Authors { get; set; }
         public DbSet<Publisher> Publishers { get; set; }
@@ -69,6 +70,8 @@ namespace EFWiki_DataAccess.Data
               new Publisher { Publisher_Id = 2, Name = "Ballantine Books", Location = "New York" },
               new Publisher { Publisher_Id = 3, Name = "Mariner Books", Location = "Boston" }
           );
+
+            modelBuilder.Entity<MainBookDetails>().HasNoKey().ToView("GetMainBookDetails");
         }
     }
 }

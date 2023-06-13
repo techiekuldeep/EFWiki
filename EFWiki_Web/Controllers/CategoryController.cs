@@ -2,6 +2,7 @@
 using EFWiki_DataAccess.Data;
 using EFWiki_Model.Models;
 using System.Collections.Generic;
+using Microsoft.EntityFrameworkCore;
 
 namespace EFWiki_Web.Controllers
 {
@@ -14,7 +15,10 @@ namespace EFWiki_Web.Controllers
         }
         public IActionResult Index()
         {
-            List<Category> objList = _db.Categories.ToList(); 
+            //Tracking query
+            //List<Category> objList = _db.Categories.ToList();
+            //No Tracking query
+            List<Category> objList = _db.Categories.AsNoTracking().ToList();
             return View(objList);
         }
 

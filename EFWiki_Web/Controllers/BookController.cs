@@ -246,7 +246,14 @@ namespace EFWiki_Web.Controllers
 
             IQueryable<Book> BookList2 = _db.Books;
             var fileredBook2 = BookList2.Where(b => b.Price > 20).ToList();
+
+            //View and Sproc
+            var viewList = _db.MainBookDetails.ToList();
+            var viewList2 = _db.MainBookDetails.FirstOrDefault();
+            var viewList3 = _db.MainBookDetails.Where(u => u.Price > 25);
             return RedirectToAction(nameof(Index));
+
+
         }
 
     }
